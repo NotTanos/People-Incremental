@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using TMPro;
 
 public class PeopleCounter : MonoBehaviour
@@ -21,6 +22,14 @@ public class PeopleCounter : MonoBehaviour
         UpdatePeopleText();
     }
 
+    public IEnumerator RepeatAdd(int amount, float repeatRate)
+    {
+        while(true)
+        {
+            AddToCount(amount);
+            yield return new WaitForSeconds(repeatRate);
+        }
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,8 +37,8 @@ public class PeopleCounter : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    // void Update()
+    // {
         
-    }
+    // }
 }
