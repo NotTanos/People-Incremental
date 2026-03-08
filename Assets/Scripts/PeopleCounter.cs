@@ -5,24 +5,24 @@ using TMPro;
 public class PeopleCounter : MonoBehaviour
 
 {
-    public int peopleCount = 0;
+    public double peopleCount = 0;
     public TMPro.TextMeshProUGUI countText;
 
     public void UpdatePeopleText()
     {
         if(countText != null)
         {
-            countText.text = "There are " + peopleCount.ToString() + " people on this planet.";
+            countText.text = $"There are {peopleCount} people on this planet.";
         }
     }
 
-    public void AddToCount(int amount)
+    public void AddToCount(double amount)
     {
         peopleCount += amount;  
         UpdatePeopleText();
     }
 
-    public IEnumerator RepeatAdd(int amount, float repeatRate)
+    public IEnumerator RepeatAdd(double amount, float repeatRate)
     {
         while(true)
         {
