@@ -5,8 +5,8 @@ using TMPro;
 public class ButtonClicks : MonoBehaviour
 {
 
-    public Button button1, forceReproduceButton, fertilityUpgrade1, litterUpgrade;
-    public TMPro.TextMeshProUGUI button1Text, forceReproduceText, fertilityUpgrade1Text, litterUpgradeText, fertilityUpgradePanelText, litterUpgradePanelText;
+    public Button button1, forceReproduceButton, fertilityUpgrade1, fertilityUpgrade2, litterUpgrade;
+    public TMPro.TextMeshProUGUI button1Text, forceReproduceText, fertilityUpgrade1Text, fertilityUpgrade2Text, litterUpgradeText, fertilityUpgrade1PanelText, litterUpgradePanelText;
 
     public PeopleCounter peopleCounter;
 
@@ -14,11 +14,12 @@ public class ButtonClicks : MonoBehaviour
     int Button1ClickedAmnt = 0;
 
     int fertilityUpgrade1Level = 0;
+    // int fertilityUpgrade2Level = 0;
     int litterUpgradeLevel = 0;
     double litterUpgradeCost = 250;
-    
 
-    /* 
+
+    /*
     This function is called when the button under the people count is clicked.
     It will turn turn itself off after the second click, revealing the force reproduce button.
     */
@@ -42,12 +43,12 @@ public class ButtonClicks : MonoBehaviour
     }
 
     // I think this one is pretty self explanatory...
-    void ForceReproduceClicked() 
+    void ForceReproduceClicked()
     {
         peopleCounter.AddToCount((double)(1*Mathf.Pow(2, litterUpgradeLevel)));
     }
 
-    void FertilityUpgradeClicked()
+    void FertilityUpgrade1Clicked()
     {
         double fertilityUpgrade1Cost = (double)Mathf.Pow(100, fertilityUpgrade1Level+1);
 
@@ -60,13 +61,22 @@ public class ButtonClicks : MonoBehaviour
             StopCoroutine(autoPpl);
             autoPpl = StartCoroutine(peopleCounter.RepeatAdd((double)(1*Mathf.Pow(2, litterUpgradeLevel)), 5/(fertilityUpgrade1Level+1)));
         }
+        if(fertilityUpgrade1Level == 1)
+        {
+            fertilityUpgrade2.gameObject.SetActive(true);
+        }
         fertilityUpgrade1Text.text = $"Upgrade Fertility\nCost: {fertilityUpgrade1Cost} people";
-        fertilityUpgradePanelText.text = $"This upgrade divides the time it takes for humans to automatically make babies. Lvl: {fertilityUpgrade1Level}";
+        fertilityUpgrade1PanelText.text = $"This upgrade divides the time it takes for humans to automatically make babies. Lvl: {fertilityUpgrade1Level}";
+    }
+
+    void FertilityUpgrade2Clicked()
+    {
+
     }
 
     void LitterUpgradeClicked()
     {
-        if(litterUpgradeLevel == 0) 
+        if(litterUpgradeLevel == 0)
         {
             litterUpgradeCost = 250;
         } else
@@ -94,17 +104,19 @@ public class ButtonClicks : MonoBehaviour
     {
         button1.onClick.AddListener(StartButtonClicked);
         forceReproduceButton.onClick.AddListener(ForceReproduceClicked);
-        fertilityUpgrade1.onClick.AddListener(FertilityUpgradeClicked);
+        fertilityUpgrade1.onClick.AddListener(FertilityUpgrade1Clicked);
+        fertilityUpgrade2.onClick.AddListener(FertilityUpgrade2Clicked);
         litterUpgrade.onClick.AddListener(LitterUpgradeClicked);
 
         forceReproduceButton.gameObject.SetActive(false);
         fertilityUpgrade1.gameObject.SetActive(false);
+        fertilityUpgrade2.gameObject.SetActive(false);
         litterUpgrade.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     // void Update()
     // {
-        
+
     // }
 }
