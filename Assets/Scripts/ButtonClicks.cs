@@ -6,15 +6,17 @@ public class ButtonClicks : MonoBehaviour
 {
 
     public Button button1, forceReproduceButton, fertilityUpgrade1, fertilityUpgrade2, litterUpgrade;
-    public TMPro.TextMeshProUGUI button1Text, forceReproduceText, fertilityUpgrade1Text, fertilityUpgrade2Text, litterUpgradeText, fertilityUpgrade1PanelText, litterUpgradePanelText;
+    public TMPro.TextMeshProUGUI button1Text, forceReproduceText, fertilityUpgrade1Text, fertilityUpgrade2Text, litterUpgradeText, fertilityUpgrade1PanelText, fertilityUpgrade2PanelText, litterUpgradePanelText;
 
     public PeopleCounter peopleCounter;
 
     Coroutine autoPpl;
+    Coroutine autoPpl2;
     int Button1ClickedAmnt = 0;
 
     int fertilityUpgrade1Level = 0;
-    // int fertilityUpgrade2Level = 0;
+    int fertilityUpgrade2Level = 0;
+    double fertilityUpgrade2Cost = 1000;
     int litterUpgradeLevel = 0;
     double litterUpgradeCost = 250;
 
@@ -71,7 +73,26 @@ public class ButtonClicks : MonoBehaviour
 
     void FertilityUpgrade2Clicked()
     {
+        if(fertilityUpgrade2Level == 0)
+        {
+            fertilityUpgrade2Cost = 1000;
+        } else
+        {
+            fertilityUpgrade2Cost = (double)Mathf.Pow(10, fertilityUpgrade2Level+3)/2;
+        }
 
+        if(peopleCounter.peopleCount >= fertilityUpgrade2Cost +2)
+        {
+            fertilityUpgrade2Level += 1;
+            peopleCounter.AddToCount(-fertilityUpgrade2Cost);
+            fertilityUpgrade2Cost = (double)Mathf.Pow(10, fertilityUpgrade2Level+3)/2;
+
+            if(fertilityUpgrade2Level==1){autoPpl2 = StartCoroutine(peopleCounter.RepeatAdd((double)(1*Mathf.Pow(2, litterUpgradeLevel)), 2.5f));}
+            StopCoroutine(autoPpl2);
+            autoPpl2 = StartCoroutine(peopleCounter.RepeatAdd((double)(1*Mathf.Pow(2, litterUpgradeLevel)), 2.5f/fertilityUpgrade2Level));
+        }
+        fertilityUpgrade2Text.text = $"Upgrade Fertility... Again\nCost: {fertilityUpgrade2Cost} people";
+        fertilityUpgrade2PanelText.text = $"This upgrade makes humans copulate even faster! Every level divides the time it takes to make babies. Lvl: {fertilityUpgrade2Level}";
     }
 
     void LitterUpgradeClicked()
@@ -81,14 +102,14 @@ public class ButtonClicks : MonoBehaviour
             litterUpgradeCost = 250;
         } else
         {
-            litterUpgradeCost = (double)Mathf.Pow(250*litterUpgradeLevel, 2);
+            litterUpgradeCost = (double)Mathf.Pow(250*litterUpgradeLevel, 2)/5;
         }
 
         if(peopleCounter.peopleCount >= litterUpgradeCost +2)
         {
             litterUpgradeLevel += 1;
             peopleCounter.AddToCount(-litterUpgradeCost);
-            litterUpgradeCost = (double)Mathf.Pow(250*litterUpgradeLevel, 2);
+            litterUpgradeCost = (double)Mathf.Pow(250*litterUpgradeLevel, 2)/5;
 
             StopCoroutine(autoPpl);
             autoPpl = StartCoroutine(peopleCounter.RepeatAdd((double)(1*Mathf.Pow(2, litterUpgradeLevel)), 5/(fertilityUpgrade1Level+1)));
