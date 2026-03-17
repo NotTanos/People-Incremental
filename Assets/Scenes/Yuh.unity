@@ -1381,8 +1381,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This button will add 1 person to the planet every time you press it. May
-    be upgradeable in the future.
+  m_text: This button will add 1 person to the planet every time you press it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1920,7 +1919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4d6600327e6b046990463573c09ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  peopleCount: 0
+  peopleCount: 1e+31
   countText: {fileID: 1889715484}
 --- !u!114 &801206231
 MonoBehaviour:
@@ -2138,6 +2137,7 @@ MonoBehaviour:
   fertilityUpgrade1Text: {fileID: 411641661}
   fertilityUpgrade2Text: {fileID: 457740025}
   litterUpgradeText: {fileID: 709705225}
+  forceReproducePanelText: {fileID: 518375226}
   fertilityUpgrade1PanelText: {fileID: 36060140}
   fertilityUpgrade2PanelText: {fileID: 1574065696}
   litterUpgradePanelText: {fileID: 686529723}

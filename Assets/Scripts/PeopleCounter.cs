@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
 
@@ -13,6 +14,10 @@ public class PeopleCounter : MonoBehaviour
         if(countText != null)
         {
             countText.text = $"There are {peopleCount} people on this planet.";
+        }
+        if(peopleCount == double.PositiveInfinity)
+        {
+            Invoke(nameof(GameEnd), 3.0f);
         }
     }
 
@@ -29,6 +34,11 @@ public class PeopleCounter : MonoBehaviour
             AddToCount(amount);
             yield return new WaitForSeconds(repeatRate);
         }
+    }
+
+    void GameEnd()
+    {
+        SceneManager.LoadScene("Yay");
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
